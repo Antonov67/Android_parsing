@@ -24,8 +24,8 @@ public class DB {
         Log.d("wiki7777", "records: " + cursor.getCount());
         int i = 0;
         while (!cursor.isAfterLast()){
-            Log.d("wiki7777", cursor.getString(0) + " " + cursor.getString(1) + " " + cursor.getString(2));
-            WikiPage wikiPage = new WikiPage(cursor.getString(1), cursor.getString(2), cursor.getString(3));
+            Log.d("wiki7777", cursor.getString(0) + " " + cursor.getString(1) + " " + cursor.getString(2) + " " + cursor.getString(3) + " " + cursor.getString(4));
+            WikiPage wikiPage = new WikiPage(cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
             wikiPages[i] = wikiPage;
             i++;
             cursor.moveToNext();
@@ -45,6 +45,7 @@ public class DB {
         for (int i = 0; i < wikiPages.length; i++) {
             cv.put("date",wikiPages[i].getNewDate());
             cv.put("new_date",wikiPages[i].getNewDate());
+            cv.put("is_change",wikiPages[i].getIsChange());
             bd.update("wiki_pages", cv, "url = ?", new String[]{wikiPages[i].getUrl()});
         }
 

@@ -66,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.d("wiki7777", " после " + Arrays.toString(wikiPages));
                 for (int i=0; i<paths.length; i++){
-                    paths[i] = wikiPages[i].getUrl() + "\n" + "Последняя дата правки в базе: "  + wikiPages[i].getDate() + "\n" + "Последняя дата правки на сайте: " + wikiPages[i].getNewDate();
+
+                    paths[i] = wikiPages[i].getUrl() + "\n" + "Последняя дата правки в базе: "  + wikiPages[i].getDate() + "\n" + "Последняя дата правки на сайте: " + wikiPages[i].getNewDate() + "\n";
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -96,7 +97,11 @@ public class MainActivity extends AppCompatActivity {
                     for (Element element : elements) {
                         str = element.getAllElements().text();
                         wikiPages[i].setNewDate(str);
-                        paths[i] = paths[i] + "\n" + "Последняя дата правки в базе: "  + wikiPages[i].getDate() + "\n" + "Последняя дата правки на сайте: " + wikiPages[i].getNewDate();
+                        String isChange = " \nзапись без изменений";
+                        if (!wikiPages[i].getDate().equals(wikiPages[i].getNewDate())){
+                            isChange = " \nзапись была изменена";
+                        }
+                        paths[i] = paths[i] + "\n" + "Последняя дата правки в базе: "  + wikiPages[i].getDate() + "\n" + "Последняя дата правки на сайте: " + wikiPages[i].getNewDate() + isChange;
                         //Log.d("wiki7777", str);
 
                     }

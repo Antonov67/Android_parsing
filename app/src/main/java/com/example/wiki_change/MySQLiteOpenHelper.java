@@ -13,16 +13,18 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     public static final String COLUMN_URL = "url";
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_NEW_DATE = "new_date";
+    public static final String COLUMN_IS_CHANGE = "is_change";
 
-    private static final String DATABASE_NAME = "wiki_base.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "wiki_bd.db";
+    private static final int DATABASE_VERSION = 4;
 
     // Database creation sql statement
     private static final String DATABASE_CREATE = "create table "
             + TABLE_WIKI_PAGES + "(" + COLUMN_ID + " integer primary key autoincrement, "
             + COLUMN_URL + " text not null, "
-            + COLUMN_DATE + ","
-            + COLUMN_NEW_DATE + ");";
+            + COLUMN_DATE + " text default (''),"
+            + COLUMN_NEW_DATE + " text default (''), "
+            + COLUMN_IS_CHANGE + " text default ('запись без изменений') " + ");";
 
     public MySQLiteOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

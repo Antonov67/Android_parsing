@@ -5,19 +5,20 @@ public class WikiPage {
     private String url;
     private String date;
     private String newDate;
-    private boolean isChange;
+    private String isChange;
 
     public WikiPage(String url) {
-        isChange = false;
+        isChange = "false";
         date = "";
         newDate = "";
         this.url = url;
     }
 
-    public WikiPage(String url, String date, String newDate) {
+    public WikiPage(String url, String date, String newDate, String isChange) {
         this.url = url;
         this.date = date;
         this.newDate = newDate;
+        this.isChange = isChange;
     }
 
     public String getUrl() {
@@ -32,9 +33,7 @@ public class WikiPage {
         return newDate;
     }
 
-    public boolean isChange() {
-        return isChange;
-    }
+
 
     public void setUrl(String url) {
         this.url = url;
@@ -48,8 +47,12 @@ public class WikiPage {
         this.newDate = newDate;
     }
 
-    public void setChange(boolean change) {
-        isChange = change;
+    public String getIsChange() {
+        return isChange;
+    }
+
+    public void setIsChange(String isChange) {
+        this.isChange = isChange;
     }
 
     @Override
