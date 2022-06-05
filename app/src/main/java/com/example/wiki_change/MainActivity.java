@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
@@ -13,59 +15,95 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    WikiPage[] wikiPages;
+    String[] paths;
     TextView textView;
+    ListView listView;
+    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d("wiki7777", "start");
 
         textView  = findViewById(R.id.textView);
+        listView = findViewById(R.id.list);
+
+
+
+
+
+        wikiPages = new WikiPage[]{new WikiPage("https://ru.wikipedia.org/w/index.php?title=Java&action=history"),
+                                     new WikiPage("https://ru.wikipedia.org/w/index.php?title=Python&action=history"),
+                                     new WikiPage("https://ru.wikipedia.org/w/index.php?title=C_Sharp&action=history")};
+
+        paths = new String[wikiPages.length];
+        for (int i=0; i<paths.length; i++){
+            paths[i] = wikiPages[i].getUrl();
+        }
+
+
+        adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, paths);
+        listView.setAdapter(adapter);
 
         MyTask mt = new MyTask();
-        mt.execute("https://ru.wikipedia.org/w/index.php?title=Java&action=history");
+
+        mt.execute(paths);
 
     }
 
-    class MyTask extends AsyncTask<String, Void, String> {
+  class MyTask extends AsyncTask<String, Void, String> {
+        String results[];
+
         @Override
         protected String doInBackground(String... params) {
             // params - это массив входных параметров
             // в params[0] будет хранится адрес сайта, который мы парсим
 
-            String title = "null"; // Тут храним значение заголовка сайта
-
+            String str = "null"; // Тут храним значение заголовка сайта
+            //Log.d("wiki7777", Arrays.toString(params));
             Document doc = null; // Здесь хранится будет разобранный HTML документ
-            try {
-                // Считываем заглавную страницу
-                doc = Jsoup.connect(params[0]).get();
-                Elements elements = doc.getElementsByClass("mw-index-pager-list-header-first mw-index-pager-list-header");
-                for (Element element : elements){
-                    title = element.getAllElements().text();
+
+            for (int i=0;i<params.length; i++) {
+
+                Log.d("wiki7777", i + "");
+                try {
+                    // Считываем заглавную страницу
+                    doc = Jsoup.connect(params[i]).get();
+                    Elements elements = doc.getElementsByClass("mw-index-pager-list-header-first mw-index-pager-list-header");
+                    for (Element element : elements) {
+                        str = element.getAllElements().text();
+                        wikiPages[i].setDate(str);
+                        paths[i] = str;
+                        //Log.d("wiki7777", str);
+
+                    }
+                } catch (IOException e) {
+                    // Если не получилось считать
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                // Если не получилось считать
-                e.printStackTrace();
+
             }
-
-            // Если всё считалось, что вытаскиваем из считанного HTML документа заголовок
-//            if (doc != null)
-//                title = doc.title();
-//            else
-//                title = "Error";
-
-            // Передаем в метод onPostExecute считанный заголовок
-            return title;
+            Log.d("wiki7777", Arrays.toString(wikiPages));
+            return str;
         }
+
+
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            textView.setText(s);
+
+            adapter.notifyDataSetChanged();
         }
-    }
+
+
+     }
 }
