@@ -14,6 +14,12 @@ public class WikiPage {
         this.url = url;
     }
 
+    public WikiPage(String url, String date, String newDate) {
+        this.url = url;
+        this.date = date;
+        this.newDate = newDate;
+    }
+
     public String getUrl() {
         return url;
     }
