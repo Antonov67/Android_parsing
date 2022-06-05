@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
             Log.d("wiki7777", Arrays.toString(wikiPages));
-            return str;
+            return str  ;
         }
 
 
