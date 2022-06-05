@@ -39,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        wikiPages = new WikiPage[]{new WikiPage("https://ru.wikipedia.org/w/index.php?title=Java&action=history"),
-                                     new WikiPage("https://ru.wikipedia.org/w/index.php?title=Python&action=history"),
-                                     new WikiPage("https://ru.wikipedia.org/w/index.php?title=C_Sharp&action=history")};
+        wikiPages = new WikiPage[]{new WikiPage("https://ru.wikipedia.org/w/index.php?title=Java"),
+                                     new WikiPage("https://ru.wikipedia.org/w/index.php?title=Python"),
+                                     new WikiPage("https://ru.wikipedia.org/w/index.php?title=C_Sharp")};
 
         paths = new String[wikiPages.length];
         for (int i=0; i<paths.length; i++){
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("wiki7777", i + "");
                 try {
                     // Считываем заглавную страницу
-                    doc = Jsoup.connect(params[i]).get();
+                    doc = Jsoup.connect(params[i] + "&action=history").get();
                     Elements elements = doc.getElementsByClass("mw-index-pager-list-header-first mw-index-pager-list-header");
                     for (Element element : elements) {
                         str = element.getAllElements().text();
