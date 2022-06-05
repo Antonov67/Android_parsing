@@ -29,32 +29,6 @@ public class MainActivity extends AppCompatActivity {
         MyTask mt = new MyTask();
         mt.execute("https://ru.wikipedia.org/w/index.php?title=Java&action=history");
 
-
-
-
-        //      String path = "https://ru.wikipedia.org/";
-
-//        NetworkService.getInstance(path).getApi().getDate("Java", "history").enqueue(new Callback<String>() {
-//            @Override
-//            public void onResponse(Call<String> call, Response<String> response) {
-//
-//                if(response.code() == 200){
-//                    Log.d("wiki777", "body");
-//                    Document data = Jsoup.parse(response.body());
-//                    Log.d("wiki777",data.toString());
-//                }else {
-//                    Log.d("wiki777", response.code() + "");
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<String> call, Throwable t) {
-//                Log.d("wiki777",t.getMessage());
-//            }
-//        });
-
-
     }
 
     class MyTask extends AsyncTask<String, Void, String> {
